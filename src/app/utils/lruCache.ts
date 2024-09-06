@@ -8,7 +8,7 @@ type LRUCache<K, V> = {
  * @param maxSize - The maximum number of items the cache can hold.
  * @returns An LRUCache instance with get and set methods.
  */
-const createLRUCache = <K, V>(maxSize: number): LRUCache<K, V> =>{
+const createLRUCache = <K, V>(maxSize: number): LRUCache<K, V> => {
   const cache = new Map<K, V>()
 
   /**
@@ -47,7 +47,4 @@ const createLRUCache = <K, V>(maxSize: number): LRUCache<K, V> =>{
   return { get, set }
 }
 
-// Create a cache instance with a size of 5
-const cache = createLRUCache<string, number>(5)
-
-export default cache
+export default createLRUCache

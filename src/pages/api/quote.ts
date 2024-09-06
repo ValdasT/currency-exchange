@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import cache from '../../app/utils/lruCache'
+import createLRUCache from '../../app/utils/lruCache'
+
+// Create a cache instance with a size of 5
+const cache = createLRUCache<string, number>(5);
 
 type SuccessResponse = {
   exchangeRate: string
