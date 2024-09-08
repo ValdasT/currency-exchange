@@ -9,6 +9,8 @@ info:
 servers:
   - url: http://localhost:3000/api
     description: Local server
+  - url: https://currency-exchange-rho-three.vercel.app/api
+    description: Production server
 
 paths:
   /quote:
