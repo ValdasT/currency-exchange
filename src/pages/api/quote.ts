@@ -69,6 +69,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       if (baseCurrency === 'USD') {
         exchangeRate = rates[quoteCurrency]
       } else {
+        // calculates the exchange rate between two non-USD currencies, using the exchange rates of both currencies relative to USD
+        // usdToQuote / usdToBase gives the exchange rate from the base currency to the quote currency.
+        // The exchange rate between GBP and EUR is: exchangeRate = 0.85 / 1.38 ≈ 0.615
         const usdToBase = rates[baseCurrency]
         const usdToQuote = rates[quoteCurrency]
         exchangeRate = usdToQuote / usdToBase

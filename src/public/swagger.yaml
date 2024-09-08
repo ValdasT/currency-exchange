@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+  title: Exchange Rate API
+  description: API to fetch exchange rates between supported currencies with caching mechanism.
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+servers:
+  - url: http://localhost:3000/api
+    description: Local server
+
+paths:
+  /quote:
+    get:
+      summary: Get exchange rate and quote amount
+      description: Retrieves the exchange rate between the base and quote currencies, and calculates the quote amount based on the provided base amount. Supports caching.
+      parameters:
+        - name: baseCurrency
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [USD, EUR, GBP, ILS]
+          description: The base currency (e.g., USD, EUR, GBP, ILS).
+        - name: quoteCurrency
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [USD, EUR, GBP, ILS]
+          description: The quote currency (e.g., USD, EUR, GBP, ILS).
+        - name: baseAmount
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 100
+          description: The amount in the base currency to be converted into the quote currency.
+      responses:
+        '200':
+          description: Successfully fetched exchange rate and calculated the quote amount.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exchangeRate:
+                    type: string
+                    example: "0.850"
+                    description: The exchange rate between base and quote currency, rounded to 3 decimal places.
+                  quoteAmount:
+                    type: integer
+                    example: 85
+                    description: The calculated amount in the quote currency.
+        '400':
+          description: Invalid input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid or unsupported base currency"
+        '500':
+          description: Server error (e.g., API URL is not defined, exchange rate unavailable).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to fetch exchange rates"
+components:
+  schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        exchangeRate:
+          type: string
+          description: The exchange rate between base and quote currencies.
+          example: "0.850"
+        quoteAmount:
+          type: integer
+          description: The calculated amount in the quote currency.
+          example: 85
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: "Invalid base amount"
